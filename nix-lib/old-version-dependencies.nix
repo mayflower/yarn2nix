@@ -13,7 +13,9 @@ self: super: {
         sha256 = "1r0k0p6ssay9nsh78f1pwkirp1y2qjwab73a7x2j7b9dp1djf2qx";
       };
       license = lib.licenses.mit;
-      buildDepends = with self; [ megaparsec protolude tasty-hunit tasty-th either neat-interpolation tasty-quickcheck quickcheck-instances ];
+      buildDepends = with self; [
+        megaparsec tasty-hunit tasty-th either neat-interpolation tasty-quickcheck quickcheck-instances
+      ] ++ [ (if (self ? protolude_0_2) then protolude_0_2 else protolude) ];
       buildTools = [ self.hpack ];
       prePatch = ''hpack'';
     };
