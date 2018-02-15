@@ -41,7 +41,7 @@ genTemplate NP.Package{..} =
           <> may "homepage" homepage)
         ])
   where
-    depPkgKeys = depsToPkgKeys dependencies
+    depPkgKeys = depsToPkgKeys (HML.union dependencies devDependencies)
     pkgDep depsSym pk = mkSym depsSym !!. packageKeyToSymbol pk
     nodeDepsSym = "allDeps"
     nameStr = mkStrQ [StrQ name]
