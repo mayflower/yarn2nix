@@ -3,6 +3,7 @@
 , version # String
 , src # Drv
 , nodeBuildInputs # Listof { name : String, drv : Drv }
+, top ? false
 , ... }@args:
 
 # since we skip the build phase, pre and post will not work
@@ -37,7 +38,7 @@ stdenv.mkDerivation ((removeAttrs args [ "nodeBuildInputs" ]) // {
     ${if nodeBuildInputs != []
       then ''
         rm -rf $out/node_modules
-        ln -sT "${linkNodeDeps
+        ${if top then "cp -rL" else "ln -sT"} "${linkNodeDeps
           { inherit name version; } nodeBuildInputs}" $out/node_modules
       '' else ""}
 
